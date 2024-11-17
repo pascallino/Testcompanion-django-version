@@ -1,0 +1,28 @@
+{% extends 'master.html' %}
+
+{% block title %}
+            CRM HOME
+        {% endblock title %}
+
+        {% block contents %}
+
+
+        <script>
+            let jwtToken = '';
+            function getCookie(name) {
+                const cookieArray = document.cookie.split('; ');
+                for (const cookie of cookieArray) {
+                    const [cookieName, cookieValue] = cookie.split('=');
+                    if (cookieName === name) {
+                        return cookieValue;
+                    }
+                }
+                return null;
+            }
+            
+            jwtToken = getCookie('access_token');
+            console.log(jwtToken);
+        </script>
+        
+
+        {% endblock contents %}
