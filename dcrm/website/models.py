@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
-    company = models.ForeignKey("Company", on_delete=models.CASCADE, related_name="users", null=True)
+    company = models.ForeignKey("Company", on_delete=models.CASCADE, related_name="users", null=True, to_field="companyid")
     userid = models.CharField(max_length=128, unique=True, null=True)
     email = models.EmailField(max_length=128, unique=True)
     first_name = models.CharField(max_length=128, null=True, blank=True)

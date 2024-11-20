@@ -155,6 +155,9 @@ if (queryStringIndex !== -1) {
                     hideSuccessMessage();
                 }, 8000);
                 if (nextValue && nextValue != '' && nextValue != '/logout') {
+                    let parts = nextValue.split('/');
+                    parts[parts.length - 1] = res.user_id;
+                    nextValue = parts.join('/');   
                     window.location.href = nextValue;
                 } else {
                     //window.location.href = '/mainboard/' + 1;
