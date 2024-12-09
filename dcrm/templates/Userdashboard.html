@@ -101,6 +101,7 @@ User dashboard
             </div>
             <div class="modal-body">
                 <form action="./{{ user_id }}" method="post">
+                    {% csrf_token %}
                     <div class="row mb-6">
                         <input type="hidden" name="q" value="name">
                         <div class="col-md-6">
@@ -130,6 +131,7 @@ User dashboard
             <div class="modal-body">
                 <!-- Add your form for creating a test here -->
                 <form method="post" id="Createform">
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label class="form-label">Select Role</label>
                         <div class="form-check" style="gap: 20px;">
@@ -184,6 +186,7 @@ User dashboard
             <div class="modal-body">
                 <!-- Add your form for modifying a User here -->
                 <form method="post" id="modifyform">
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="modfirstName" class="form-label">First Name</label>
                         <input type="text"  class="form-control" id="modfirstName" required>

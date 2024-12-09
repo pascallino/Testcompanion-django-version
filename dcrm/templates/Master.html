@@ -128,9 +128,9 @@
 
     <div id="sidebar">
         <a href="{% url 'userboard' user_id %}"><i class="fa fa-user" aria-hidden="true"></i> Users</a>
-        <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Mail Settings</a>
-        <a href="#"><i class="fa fa-book" aria-hidden="true"></i> Tests</a>
-        <a href="#"><i class="fa fa-male" aria-hidden="true"></i>  Profile</a>
+        <a href="{% url 'emailboard' user_id %}"><i class="fa fa-envelope" aria-hidden="true"></i> Mail Settings</a>
+        <a href="{% url 'dashboard' user_id %}"><i class="fa fa-book" aria-hidden="true"></i> Tests</a>
+        <a href="{% url 'profileboard' user_id %}"><i class="fa fa-male" aria-hidden="true"></i>  Profile</a>
     </div>
 
     <div id="content">

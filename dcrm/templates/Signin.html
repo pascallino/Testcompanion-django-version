@@ -128,10 +128,12 @@ if (queryStringIndex !== -1) {
 }
             console.log(nextValue);
             console.log(nextValue);
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             var formData = {
                 email: email,
                 password: password,
-                remember: remember
+                remember: remember,
+                timezone: timezone,
             };
             formData = JSON.stringify(formData);
             console.log(formData);
@@ -156,7 +158,18 @@ if (queryStringIndex !== -1) {
                 }, 8000);
                 if (nextValue && nextValue != '' && nextValue != '/logout') {
                     let parts = nextValue.split('/');
+                    let flag = 0;
+                    for (let i = parts.length - 1; i >= 0; i--) {
+                        if (parts[i] === 'rescheduletestget' || parts[i] === 'testlist'
+                        || parts[i] === 'resendmailget' || parts[i] === 'editquestion'
+                        || parts[i] === 'Addtestuserpost') {
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag === 0){
                     parts[parts.length - 1] = res.user_id;
+                    } 
                     nextValue = parts.join('/');   
                     window.location.href = nextValue;
                 } else {

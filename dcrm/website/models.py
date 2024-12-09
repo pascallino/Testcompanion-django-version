@@ -1,6 +1,66 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 # Create your models here.
+# from mongoengine import Document, StringField, DateTimeField,fields, IntField, BooleanField
+from mongoengine import EmbeddedDocument, Document, StringField, DateTimeField, IntField, BooleanField, ReferenceField, ListField, EmbeddedDocumentListField, CASCADE
+
+import datetime
+
+class Blog(Document):
+    title = StringField(required=True, max_length=100)
+    content = StringField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+class Question(Document):
+    text = StringField()
+    question_id = StringField(required=True, max_length=100)
+    Qnum = IntField()
+    correct_answer = StringField()
+    test_id = StringField(required=True, max_length=100)
+    image_path = StringField()
+
+class Option(Document):
+    text = StringField()
+    Opnum =IntField()
+    question_id  = ReferenceField('Question', required=True) 
+
+class Teststat(Document):
+    test_id = ReferenceField('Test', required=True)
+    test_day_id = StringField(required=True, max_length=100)
+    test_date = DateTimeField()
+    duration = IntField(default=0)
+    status = StringField(max_length=128, required=True, default='pending')
+    applicanttests = ListField(ReferenceField('Applicanttest'))
+
+class Test(Document):
+    test_name = StringField()
+    test_id = StringField(required=True, max_length=100)
+    created = DateTimeField()
+    userid = StringField(required=True, max_length=100)  # Reference to the User document
+    #question_id = StringField(required=True, max_length=100)
+    questions = ListField(ReferenceField(Question)) 
+    teststats = ListField(ReferenceField(Teststat))
+
+class Userquestion(Document):
+    user_id = StringField(required=True, max_length=100)
+    question_id = StringField(required=True, max_length=100)
+    Qnum = IntField()
+    answer_chosen = StringField()
+    created_date = DateTimeField()
+
+
+class Emailserver(models.Model):
+    emailid = models.CharField(max_length=255, unique=True, null=True)
+    sender = models.CharField(max_length=255)
+    cc = models.EmailField(max_length=255)
+    mail_server = models.EmailField(max_length=255, null=False)
+    mail_port = models.IntegerField(null=False)
+    mail_use_tls = models.BooleanField(default=True)
+    mail_use_ssl = models.BooleanField(default=False)
+    username = models.EmailField(max_length=255, null=False)
+    password = models.EmailField(max_length=255, null=False)
+    active = models.EmailField(max_length=255, default='No')
+
 
 class Company(models.Model):
     companyid = models.CharField(max_length=255, unique=True, null=True)
@@ -63,3 +123,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.email})"
+
+class Applicanttest(Document):
+    user_email = StringField()
+    fullname = StringField()
+    user_id = StringField()
+    test_day_id = ReferenceField('Teststat', required=True)
+    secret_key = StringField()
+    started = BooleanField(default=False)
+    start_date = DateTimeField()
+    test_status = StringField(max_length=128, required=True, default='pending')
+    score = IntField(default=0)
