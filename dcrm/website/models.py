@@ -18,6 +18,7 @@ class Question(Document):
     correct_answer = StringField()
     test_id = StringField(required=True, max_length=100)
     image_path = StringField()
+    options = ListField(ReferenceField('Option'))
 
 class Option(Document):
     text = StringField()

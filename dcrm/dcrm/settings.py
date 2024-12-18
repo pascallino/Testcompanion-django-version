@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_apscheduler',
     'corsheaders',
+    'graphene_django',
+    'graphene_mongo',
 ]
 
 # settings.py

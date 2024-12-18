@@ -493,6 +493,8 @@ def question_post(request):
                                        Opnum=i, question_id=q)
                             o.question_id = q
                             o.save()
+                            q.options.append(o)
+                            q.save()
                 except (KeyError, IndexError) as e:
                     pass
 
@@ -681,6 +683,8 @@ def posttest_getquestions(request):
             for op in q_options:
                 o = Option(question_id=q, text=op.text, Opnum=op.Opnum)
                 o.save()
+                q.options.append(o)
+                q.save()
             # Copy, rename, and move the image file
             imagetag = f"image_{ques.question_id}_{ques.test_id}"
             img_extensions = ['.jpeg', '.jpg', '.png']
